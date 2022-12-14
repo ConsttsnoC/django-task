@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-x7vh^$09o^fvp%l3p*=8fu2zv!akck)8tnmd2=8(4v+n56$t77'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['taskksat.pythonanywhere.com']
 
@@ -126,3 +126,10 @@ STATIC_URL = 'static/'
 LOGIN_URL = '/login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    print("Looks like no locl file. You must be on production")
+
