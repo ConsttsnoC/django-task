@@ -1,0 +1,51 @@
+<!--привязка шаблона к странице-->
+{% extends 'todo/base.html' %}
+
+
+
+{% block content %}
+
+
+<div class="container-center">
+    <div class="col-md-12 col-12 col-sm-12">
+        <div class="card">
+            <div class="text-center">
+                <h4>Ваши выполненные задачи:</h4>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tr>
+                                <th class="text-center">Выполненые задачи</th>
+                                <th class="text-center">Описание</th>
+                                <th class="text-center">Время окончания задачи</th>
+                            </tr>
+                            <tr>
+                                {% for todo in todos %}
+                                <td class="text-center">
+                                    {% if todo.important %}<b>{{ todo.title }}</b>
+                                    {% else %}
+                                    {{ todo.title }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {{ todo.memo }}
+                                </td>
+                                <td class="text-center">
+                                    {{ todo.datevompleted|date:'M j Y H:i' }}
+                                <td class="text-center">
+                                    <form method="POST" action="{% url 'deletetodo' todo.id %}">
+                                        <button class="btn btn-secondary" type="submit">Удалить</button>
+                                        {% csrf_token %}
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
