@@ -1,3 +1,6 @@
+<head>
+    <title>Ваши задачи</title>
+</head>
 {% extends "todo/base.html" %}
 
 {% block content %}
@@ -7,52 +10,79 @@
         <div class="card">
             <div class="text-center">
                 <h4>Ваши задачи:</h4>
+                <div class="display-5">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th class="text-center">Выполнение</th>
+                                    <th class="text-center">Задача</th>
+                                    <th class="text-center">Редактирование</th>
+                                </tr>
+                                <tr>
+                                    {% for todo in todos %}
+                                    <td class="text-center">
+                                        <!--                                        <form method="POST" action="{% url 'completetodo' todo.id %}">-->
+                                        <form enctype="multipart/form-data">
+                                            <button type="submit" class="btn btn-{% if todo.datevompleted %}danger{% else %}success{% endif %}"
+                                                    aria-label="Выполнение задачи"
+                                                    onclick="markСompleted('{{ todo.id }}')">
+                                                {% if todo.datevompleted %}
+                                                ✘
+                                                {% else %}
+                                                ✓
+                                                {% endif %}
+                                            </button>
+                                            {% csrf_token %}
+                                        </form>
 
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <tr>
-                                <th class="text-center">Выполнение</th>
-                                <th class="text-center">Задача</th>
-                                <th class="text-center">Описание</th>
-                                <th class="text-center">Редактирование</th>
-                            </tr>
-                            <tr>
-                                {% for todo in todos %}
-                                <td class="text-center">
-                                    <form method="POST" action="{% url 'completetodo' todo.id %}">
-                                        <button type="submit" class="btn-close" aria-label="Закрыть"></button>
-                                        {% csrf_token %}
-                                    </form>
-                                </td>
-                                <td class="text-center">
-                                    <a href="{% url 'viewstodo' todo.id %}"class="link-dark">
-                                        {% if todo.important %}<b>{{ todo.title }}</b>
-                                        {% else %}
-                                        {{ todo.title }}
-                                        {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    <a href="{% url 'viewstodo' todo.id %}"class="link-dark">
-                                        {{ todo.memo }}
-                                </td>
-                                <td class="text-center">
-                                    <form method="POST" action="{% url 'viewstodo' todo.id %}">
-                                        <button class="btn btn-danger" type="submit">Редактировать</button>
-                                        {% csrf_token %}
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                                        <!--                                        </form>-->
+                                    </td>
+                                    <td class="text-center task-{{ todo.id }}">
+                                        <p href="{% url 'viewstodo' todo.id %}" class="link-dark" {% if todo.datevompleted %} style="text-decoration: line-through" {% endif %}>
+                                            {% if todo.important %}<b>{{ todo.title }}</b>
+                                            {% else %}
+                                            {{ todo.title }}
+                                            {% endif %}
+                                        </p>
+                                        <p class="link-dark" {% if todo.datevompleted %} style="text-decoration: line-through" {% endif %}>
+                                            {{ todo.memo }}
+                                        </p>
+                                    </td>
+                                    <td class="text-center">
+                                        <form method="POST" action="{% url 'viewstodo' todo.id %}">
+                                            <button class="btn btn-primary" type="submit">✎</button>
+                                            {% csrf_token %}
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
 
 
-                        <a type="button" class="btn btn-primary" href="{% url 'createtodo' %}">Создать</a>
+                            <a type="button" class="btn btn-primary" href="{% url 'createtodo' %}">Создать</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    async function markСompleted(id) {
+        const body = new FormData(document.getElementsByTagName("form")[0]);
+        const element = document.querySelector(`.task-` + id);
+
+        for (const child of element.children) {
+            child.style.textDecoration = child.style.textDecoration ? "" : "line-through";
+        }
+
+        await fetch(`http://127.0.0.1:8000/todo/${id}/complete`, {
+            method: 'POST',
+            body,
+        })
+    }
+</script>
 
 {% endblock %}

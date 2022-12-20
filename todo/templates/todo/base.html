@@ -1,47 +1,51 @@
 <!--начало работы бустрап-->
 <!doctype html>
+{% load static %}
 <html lang="ru">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-</html>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles/custom.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
 {% if user.is_authenticated %}
 <!--НАВБАР-->
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">Task</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Переключатель навигации">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="{% url 'currenttodos' %}">Текущие</a>
-          <a class="nav-link" href="{% url 'createtodo' %}">Создать</a>
-          <a class="nav-link" href="{% url 'completettodos' %}">Выполненные</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Task</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="{% url 'currenttodos' %}">Текущие</a>
+                <a class="nav-link" href="{% url 'createtodo' %}">Создать</a>
+                <a class="nav-link" href="{% url 'completettodos' %}">Выполненные</a>
+            </div>
         </div>
-      </div>
-      <!--кнопка выхода для пользователя-->
-       <form action="{% url 'logoutuser' %}" method="POST">
-    {% csrf_token %}
-    <button class="btn btn-dark" type="submit">Выйти</button>
-  </form>
+        <!--кнопка выхода для пользователя-->
+        <nav class="navbar navbar-dark bg-dark">
+            <form action="{% url 'logoutuser' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-dark" type="submit">Выйти</button>
+            </form>
     </div>
-  </nav>
-  {% else %}
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Task</a>
-    <div class="d-flex flex-row-reverse">
-    <a class="btn btn-dark" href="{% url 'loginuser' %}">Войти</a>
-    <a class="btn btn-dark" href="{% url 'signupuser' %}">Зарегистрироваться</a>
-  </div>
+</nav>
+{% else %}
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Task</a>
+        <div class="d-flex flex-row-reverse">
+            <a class="btn btn-dark" href="{% url 'loginuser' %}">Войти</a>
+            <a class="btn btn-dark" href="{% url 'signupuser' %}">Зарегистрироваться</a>
+        </div>
 </nav>
 {% endif %}
-
 
 
 <!--проверка пользователя на вхождение в словарь пользователей, если тру то заходим в ветку иф-->
@@ -50,14 +54,14 @@
 <br>
 <br>
 <div class="container px-2 text-center">
-   <div class="alert alert-dark" role="alert">
-  <div class="card-body">
-    <p class="h3">
-    Пользователь {{ user.username }} авторизован
-  </div>
+    <div class="alert alert-dark" role="alert">
+        <div class="card-body">
+            <p class="h3">
+                Пользователь {{ user.username }} авторизован
+        </div>
+    </div>
 </div>
-  </div>
-  </div>
+</div>
 <!--если фолс, то в else-->
 {% else %}
 <!--кнопки регистрации и входа-->
@@ -66,3 +70,11 @@
 {% endif %}
 
 {% block content %}{% endblock %}
+</html>
+
+<script>
+    const div = document.createElement("div");
+    div.innerHTML = 'Привет, Костя. Я  Java Script. Я добавил новый элемент на твою страницу';
+    document.body.appendChild(div);
+    console.log("Привет, Костя. Я Java Script")
+</script>
