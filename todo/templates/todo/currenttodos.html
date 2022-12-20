@@ -78,7 +78,7 @@
             child.style.textDecoration = child.style.textDecoration ? "" : "line-through";
         }
 
-        await fetch(`http://127.0.0.1:8000/todo/${id}/complete`, {
+        await fetch(`https://taskksat.pythonanywhere.com//todo/${id}/complete`, {
             method: 'POST',
             body,
         })
