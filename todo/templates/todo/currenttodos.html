@@ -50,7 +50,7 @@
                                         </p>
                                     </td>
                                     <td class="text-center">
-                                        <form method="POST" action="{% url 'viewstodo' todo.id %}">
+                                        <form method="GET" action="{% url 'viewstodo' todo.id %}">
                                             <button class="btn btn-primary" type="submit">✎</button>
                                             {% csrf_token %}
                                         </form>
@@ -78,7 +78,7 @@
             child.style.textDecoration = child.style.textDecoration ? "" : "line-through";
         }
 
-        await fetch(`https://taskksat.pythonanywhere.com//todo/${id}/complete`, {
+        await fetch(`http://127.0.0.1:8000/todo/${id}/complete`, {
             method: 'POST',
             body,
         })
