@@ -104,8 +104,7 @@ def viewstodo(request,todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)#система сверяет ключ и владельца записиси
     if request.method == 'GET':
     #чтобы редактировать информацию из базы данных, передаем словарем form
-        form = TodoForm(instance=todo)#параметр формы
-        return render(request, 'todo/viewstodo.html', {'todo':todo, 'form':form})
+        return render(request, 'todo/viewstodo.html', {'todo':todo })
     #после того как пользователь перешел в раздел редактирования,мы переходим в ветку else
     else:
         #если при редактировании будут допущены ошибки
@@ -116,7 +115,7 @@ def viewstodo(request,todo_pk):
             return redirect('currenttodos')
             #в случае ошибки отобразим
         except ValueError:
-            return render(request, 'todo/viewstodo.html', {'todo': todo, 'form': form,'error':'Плохая информация:'})
+            return render(request, 'todo/viewstodo.html', {'todo': todo, 'error':'Плохая информация:'})
 @login_required
  #функция для завершения задач пользователем
 def completetodo(request,todo_pk):
