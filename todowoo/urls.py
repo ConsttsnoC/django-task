@@ -41,4 +41,5 @@ urlpatterns = [
     path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
     #отображения задач для пользователя
     path('completet/', views.completettodos, name='completettodos'),
+    #перечеркивание
 ]

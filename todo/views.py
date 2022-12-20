@@ -38,7 +38,7 @@ def signupuser(request):
             except IntegrityError:
                 return render(request, 'todo/signupuser.html',{'form':UserCreationForm(),'error':'Это имя пользователя уже существует, зайдайте новое.'})
             except ValueError:
-                return render(request, 'todo/signupuser.html', {'form': UserCreationForm(), 'error': 'На хуй'})
+                return render(request, 'todo/signupuser.html', {'form': UserCreationForm(), 'error': 'Введите имя и пароль!'})
             #если пароли не совподает, то выдаем текст + новое заполнение формы,переменная error нужна только для отображения на html
         else:
             return render(request, 'todo/signupuser.html',{'form':UserCreationForm(),'error':'Не правильный пароль, попробуйте еще раз.'})
@@ -90,7 +90,7 @@ def createtodo(request):
 #отрисовка страницы после входа в систему
 def currenttodos(request):
     #передаем данные из БД на страницу             #после завершения задачи, убирать задачу
-    todos = Todo.objects.filter(user=request.user, datevompleted__isnull=True)
+    todos = Todo.objects.filter(user=request.user)
     return render(request,'todo/currenttodos.html',{'todos':todos})
 @login_required
 def completettodos(request):
@@ -123,7 +123,7 @@ def completetodo(request,todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user) # система сверяет ключ и владельца записи
     if request.method == 'POST':
         #присвоение текущей даты и времени(заполнения поля в случая завершения задачи)
-        todo.datevompleted = timezone.now()
+        todo.datevompleted = timezone.now() if todo.datevompleted == None else None
         todo.save()
         return redirect('currenttodos')
 
@@ -136,6 +136,10 @@ def deletetodo(request,todo_pk):
     if request.method == 'POST':
         todo.delete()
         return redirect('completettodos')
+
+
+
+
 
 
 

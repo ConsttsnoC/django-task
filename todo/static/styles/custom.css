@@ -1,0 +1,25 @@
+.page-title-title {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 42px;
+  font-family: "Verdana", sans-serif;
+  text-align: center;
+}
+
+.page-home {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.page-complet{
+    text-align: center;
+}
+
+form {
+    margin: 0;
+    padding: 8px;
+}
+
+.text-center {
+    vertical-align: middle;
+}
