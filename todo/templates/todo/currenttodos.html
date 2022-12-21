@@ -59,8 +59,8 @@
                                 {% endfor %}
                             </table>
 
-
-                        <a type="button" class="btn btn-primary" href="{% url 'createtodo' %}">Создать</a>
+                            <a type="button" class="btn btn-primary" href="{% url 'createtodo' %}">Создать</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,6 +78,7 @@
         }
 
         await fetch(`https://taskksat.pythonanywhere.com/todo/${id}/complete`, {
+
             method: 'POST',
             body,
         })

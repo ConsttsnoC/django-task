@@ -4,9 +4,7 @@
 
 
 {% block content %}
-
-
-<div class="container-center">
+<div class="container-center row">
     <div class="col-md-12 col-12 col-sm-12">
         <div class="card">
             <div class="text-center">
@@ -15,9 +13,9 @@
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <tr>
-                                <th class="text-center">Выполненые задачи</th>
-                                <th class="text-center">Описание</th>
-                                <th class="text-center">Время окончания задачи</th>
+                                <th class="page-complet">Выполненые задачи</th>
+                                <th class="page-complet">Описание</th>
+                                <th class="page-complet">Время окончания задачи</th>
                             </tr>
                             <tr>
                                 {% for todo in todos %}

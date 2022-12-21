@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 class Todo(models.Model):
     #атрибуты в админке
     #название "дела"
-    title = models.CharField(max_length=100)
+    title = models.TextField(null=True, blank=True)
     #описание "дела"
-    memo = models.TextField(null=False)
+    memo = models.TextField(null=True, blank=True)
     #дата и время создание записи(создаваемый автоматически)
     created = models.DateTimeField(auto_now_add=True)
     #отметка о времени о выполнение дела
